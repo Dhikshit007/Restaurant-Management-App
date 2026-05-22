@@ -19,4 +19,27 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.logo {
+  width: 100px;
+}
+.register input,
+.login input {
+  width: 300px;
+  height: 40px;
+  padding-left: 20px;
+  display: block;
+  margin-bottom: 30px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.register button,
+.login button {
+  width: 320px;
+  height: 40px;
+  background-color: #236db7;
+  color: white;
+  border: 1px solid #236db7;
+  border-radius: 5px;
+  cursor: pointer;
+}
 </style>

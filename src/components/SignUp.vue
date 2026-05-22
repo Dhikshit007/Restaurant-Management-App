@@ -31,12 +31,16 @@ export default {
       });
       console.warn(result);
       if (result.status == 201) {
-        alert("user registered");
-      } else {
-        alert("something went wrong");
-        localStorage.setItem("user-info", JSON.stringifyI(result.data));
+        localStorage.setItem("user-info", JSON.stringify(result.data));
+        this.$router.push({ name: "HomePage" });
       }
     },
+  },
+  mounted() {
+    let user = localStorage.getItem("user-info");
+    if (user) {
+      this.$router.push({ name: "HomePage" });
+    }
   },
 };
 </script>

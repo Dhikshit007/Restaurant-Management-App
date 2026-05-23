@@ -57,9 +57,9 @@ export default {
         this.Restaurant,
         {
           name: this.Restaurant.name,
-          cuisine: this.restaurant.cuisine,
-          location: this.restaurant.location,
-          rating: this.restaurant.rating,
+          cuisine: this.Restaurant.cuisine,
+          location: this.Restaurant.location,
+          rating: this.Restaurant.rating,
         },
       );
       if (result.status == 201) {

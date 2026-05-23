@@ -5,6 +5,7 @@ import SignUp from "./SignUp.vue";
 import LoginPage from "./Login.vue";
 import AddPage from "./Add.vue";
 import UpdatePage from "./Update.vue";
+import profile from "./profile.vue";
 const routes = [
   {
     name: "HomePage",
@@ -30,6 +31,11 @@ const routes = [
     name: "UpdatePage",
     component: UpdatePage,
     path: "/update/:id",
+  },
+  {
+    name: "ProfilePage",
+    component: profile,
+    path: "/profile",
   },
 ];
 

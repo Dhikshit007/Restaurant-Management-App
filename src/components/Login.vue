@@ -1,15 +1,19 @@
 <template>
   <div>
-    <img class="logo" src="../assets/resto-logo.jpg" alt="Vue logo" />
+    <img class="logo" src="../assets/resto-logo.jpg" alt="Restaurant Logo" />
 
     <h1>Login Page</h1>
 
     <div class="login">
-      <input type="text" v-model="email" placeholder="Enter email" />
+      <input type="text" v-model="name" placeholder="Enter Username" />
 
-      <input type="password" v-model="password" placeholder="Enter password" />
+      <input type="password" v-model="password" placeholder="Enter Password" />
 
-      <button v-on:click="Login">Login</button>
+      <button @click="login">Login</button>
+
+      <p v-if="errorMessage" class="error">
+        {{ errorMessage }}
+      </p>
 
       <p>
         <router-link to="/signup"> New User? Sign Up </router-link>
@@ -26,40 +30,61 @@ export default {
 
   data() {
     return {
-      email: "",
+      name: "",
       password: "",
+      errorMessage: "",
     };
   },
 
   methods: {
-    async Login() {
-      let result = await axios.get(
-        `http://localhost:8000/users?username=${this.username}&password=${this.password}`,
-      );
+    async login() {
+      this.errorMessage = "";
 
-      console.warn(result);
+      if (!this.name || !this.password) {
+        this.errorMessage = "Please enter username and password";
+        return;
+      }
 
-      if (result.status == 200 && result.data.length > 0) {
-        localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+      try {
+        const result = await axios.post("http://localhost:8000/login", {
+          name: this.name,
+          password: this.password,
+        });
 
-        this.$router.push({ name: "HomePage" });
-      } else {
-        alert("Invalid Email or Password");
+        localStorage.setItem("user-info", JSON.stringify(result.data));
+
+        this.$router.push({
+          name: "HomePage",
+        });
+      } catch (error) {
+        if (error.response) {
+          if (error.response.status === 401) {
+            this.errorMessage = "Invalid username or password";
+          } else {
+            this.errorMessage = error.response.data.message || "Login failed";
+          }
+        } else {
+          this.errorMessage = "Unable to connect to server";
+        }
+
+        console.error(error);
       }
     },
   },
 
   mounted() {
-    let user = localStorage.getItem("user-info");
+    const user = localStorage.getItem("user-info");
 
     if (user) {
-      this.$router.push({ name: "HomePage" });
+      this.$router.push({
+        name: "HomePage",
+      });
     }
   },
 };
 </script>
 
-<style>
+<style scoped>
 .logo {
   width: 100px;
 }
@@ -86,5 +111,11 @@ export default {
 
 .login p {
   margin-top: 20px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
 }
 </style>

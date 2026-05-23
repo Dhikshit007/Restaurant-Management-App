@@ -17,11 +17,16 @@
       />
       <input
         type="text"
-        name="contact"
+        name="location"
         placeholder="Enter location"
         v-model="restaurant.location"
       />
-
+      <input
+        type="number"
+        name="rating"
+        placeholder="Enter rating"
+        v-model="restaurant.rating"
+      />
       <button type="button" v-on:click="updateRestaurant">
         Update Restaurant
       </button>
@@ -42,8 +47,9 @@ export default {
     return {
       restaurant: {
         name: "",
-        address: "",
-        contact: "",
+        cuisine: "",
+        location: "",
+        rating: "",
       },
     };
   },
@@ -52,11 +58,12 @@ export default {
       console.warn(this.restaurant);
 
       const result = await axios.put(
-        "http://localhost:3000/restaurant/" + this.$route.params.id,
+        "http://localhost:8000/restaurants/" + this.$route.params.id,
         {
           name: this.restaurant.name,
-          address: this.restaurant.address,
-          contact: this.restaurant.contact,
+          cuisine: this.restaurant.cuisine,
+          location: this.restaurant.location,
+          rating: this.restaurant.rating,
         },
       );
 
@@ -73,7 +80,7 @@ export default {
       this.$router.push({ name: "SignUp" });
     }
     const result = await axios.get(
-      "http://localhost:3000/restaurant/" + this.$route.params.id,
+      "http://localhost:8000/restaurants/" + this.$route.params.id,
     );
     //console.warn(this.$route.params.id)
     console.warn(result.data);

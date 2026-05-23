@@ -53,7 +53,7 @@ export default {
     async addRestaurant() {
       console.warn(this.Restaurant);
       const result = await axios.post(
-        "http://localhost:3000/restaurant",
+        "http://localhost:8000/restaurants",
         this.Restaurant,
         {
           name: this.Restaurant.name,

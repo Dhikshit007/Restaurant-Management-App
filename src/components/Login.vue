@@ -34,7 +34,7 @@ export default {
   methods: {
     async Login() {
       let result = await axios.get(
-        `http://localhost:3000/user?email=${this.email}&password=${this.password}`,
+        `http://localhost:8000/users?username=${this.username}&password=${this.password}`,
       );
 
       console.warn(result);

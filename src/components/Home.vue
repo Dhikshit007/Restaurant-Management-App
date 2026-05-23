@@ -32,7 +32,7 @@ export default {
   name: "HomePage",
   data() {
     return {
-      name: "",
+      username: "",
       restaurant: [],
     };
   },
@@ -41,7 +41,9 @@ export default {
   },
   methods: {
     async deleterestaurant(id) {
-      let result = await axios.delete("http://localhost:3000/restaurant/" + id);
+      let result = await axios.delete(
+        "http://localhost:8000/restaurants/" + id,
+      );
       console.warn(result);
       if (result.status == 200) {
         this.loadData();
@@ -49,11 +51,11 @@ export default {
     },
     async loadData() {
       let user = localStorage.getItem("user-info");
-      this.name = JSON.parse(user).name;
+      this.username = JSON.parse(user).username;
       if (!user) {
         this.$router.push({ name: "SignUp" });
       }
-      let result = await axios.get("http://localhost:3000/restaurant");
+      let result = await axios.get("http://localhost:8000/restaurants");
       console.warn(result);
       this.restaurant = result.data;
     },
